@@ -81,7 +81,6 @@ archEnemies["Batman"] = "The Joker"
 archEnemies["Batman"] = "Penguin"
 
 //sets - don't remember order, don't allow duplicates
-
 var actors = Set([
     "Denzel Washington",
     "Tom Cruise",
