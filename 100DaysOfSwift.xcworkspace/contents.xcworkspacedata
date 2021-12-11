@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Day4/Day4.playground">
+   </FileRef>
+   <FileRef
       location = "group:/Users/vlad/Programming/100DaysOfSwift/Day3/Day3.playground">
    </FileRef>
    <FileRef
