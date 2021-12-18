@@ -1,5 +1,14 @@
 import Cocoa
 
+func gcd(_ a: Int,_ b: Int) -> Int {
+    if b > a {
+        return gcd(b, a)
+    }
+    let remainder = a % b
+    if remainder == 0 { return b }
+    return gcd(b, remainder)
+}
+
 struct Fraction {
     private(set) var numerator: Int
     private var denominator: Int
@@ -7,6 +16,7 @@ struct Fraction {
     init(numerator: Int, denominator: Int) {
         self.numerator = numerator
         self.denominator = denominator
+        reduce()
     }
     
     func add(a: Fraction, b: Fraction) -> Fraction {
@@ -27,32 +37,22 @@ struct Fraction {
         return newFraction
     }
     
-    func multiply(a: Fraction, b: Fraction) -> Fraction {
-        let newNumerator = a.numerator * b.numerator
-        let newDenominator = a.denominator * b.denominator
-        let newFraction = Fraction(numerator: newNumerator, denominator: newDenominator)
-        return newFraction
-    }
-    
-//    func divide(a: Fraction, b:Fraction) -> Fraction {
-//        let newNumerator = a.numerator * b.denominator
-//        let newDenominator = a.denominator * b.numerator
-//        let newFraction = Fraction(numerator: newNumerator, denominator: newDenominator)
-//        return newFraction
-//    }
-    
-    static func divide(_ numerator: Fraction, by divisor: Fraction) -> Fraction {
-        let newNumerator = numerator.numerator * divisor.denominator
-        let newDenominator = numerator.denominator * divisor.numerator
-        let newFraction = Fraction(numerator: newNumerator, denominator: newDenominator)
-        return newFraction
+    mutating func multiply(by fraction: Fraction) {
+        numerator *= fraction.numerator
+        denominator *= fraction.denominator
+        reduce()
     }
     
     func divided(by divisor: Fraction) -> Fraction {
-        Fraction(
-            numerator: self.numerator * divisor.denominator,
-            denominator: divisor.numerator * self.denominator
-        )
+        var copy = self
+        copy.divide(by: divisor)
+        return copy
+    }
+    
+    mutating func divide(by divisor: Fraction) {
+        numerator *= divisor.denominator
+        denominator *= divisor.numerator
+        reduce()
     }
     
     static func / (numerator: Fraction, divisor: Fraction) -> Fraction {
@@ -61,6 +61,12 @@ struct Fraction {
     
     static func /= (numerator: inout Fraction, divisor: Fraction) {
         numerator.divide(by: divisor)
+    }
+    
+    mutating func reduce() {
+        let gcd = gcd(numerator, denominator)
+        numerator /= gcd
+        denominator /= gcd
     }
 }
 
@@ -71,31 +77,16 @@ extension Fraction: CustomStringConvertible {
     }
 }
 
-func printFraction(fraction: Fraction) {
-    print("\(fraction)")
-}
+//fraction creating
+var fraction1 = Fraction(numerator: 12, denominator: 6)
+var fraction2 = Fraction(numerator: 3, denominator: 9)
 
-let fraction1 = Fraction(numerator: 3, denominator: 4)
-let fraction2 = Fraction(numerator: 5, denominator: 2)
+//divide
+var fraction3 = Fraction(numerator: 43, denominator: 11)
+fraction3.divide(by: fraction1)
 
-//adding
-let fraction3 = fraction1.add(a: fraction1, b: fraction2)
-printFraction(fraction: fraction3)
+//multiply
+var fraction4 = Fraction(numerator: 23, denominator: 9)
+fraction4.multiply(by: fraction2)
 
-//subtracting
-let fraction4 = fraction1.subtract(a: fraction1, b: fraction2)
-printFraction(fraction: fraction4)
 
-//multiplying
-let fraction5 = fraction1.multiply(a: fraction1, b: fraction2)
-printFraction(fraction: fraction5)
-
-//dividing
-let fraction6 = Fraction.divide(fraction1, by: fraction2)
-printFraction(fraction: fraction6)
-
-var copy = fraction1
-copy.divide(by: fraction2)
-copy
-fraction1.divided(by: fraction2)
-Fraction.divide(fraction1, by: fraction2)
