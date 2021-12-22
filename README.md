@@ -1,4 +1,4 @@
 Course Link: www.hackingwithswift.com/100/swiftui
 
-Current Day Completed: 23
+Current Day Completed: 24
 

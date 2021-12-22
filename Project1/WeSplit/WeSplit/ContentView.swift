@@ -58,6 +58,7 @@ struct ContentView: View {
                     Picker("Tip", selection: $tipPercentage) {
                         ForEach(0..<100) {
                             Text($0, format: .percent)
+                                .foregroundColor(tipPercentage < 1 ? .red : .primary)
                         }
                     }
                 } header: {
