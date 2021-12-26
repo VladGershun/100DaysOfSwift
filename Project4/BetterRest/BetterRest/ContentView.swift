@@ -27,36 +27,62 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             Form {
-                VStack(alignment: .leading, spacing: 0) {
+                Section {
+                    HStack{
+                        Spacer()
+                        DatePicker("Please enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
+                            .labelsHidden()
+                        Spacer()
+                    }
+                } header: {
                     Text("When do you want to wake up?")
                         .font(.headline)
-                    
-                    DatePicker("Please enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
+                }
+                .task {
+                    calculateBedtime()
                 }
                 
-                VStack(alignment: .leading, spacing: 0) {
+                Section {
+                    Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
+                } header: {
                     Text("Desired amount of sleep")
                         .font(.headline)
-                    Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
+                }
+                .task {
+                    calculateBedtime()
                 }
                 
-                VStack(alignment: .leading, spacing: 0) {
+                Section {
+                    Picker("Number Of Cups", selection: $coffeeAmount) {
+                        ForEach(1...20, id: \.self) {
+                            Text("\($0) Cups")
+                        }
+                    }
+                    
+                } header: {
                     Text("Daily Coffe Intake")
                         .font(.headline)
-                    
-                    Stepper(coffeeAmount == 1 ? "1 Cup" : "\(coffeeAmount) Cups", value: $coffeeAmount, in: 1...20)
+                }
+                .task {
+                    calculateBedtime()
+                }
+                
+                Section {
+                    Text(alertMessage)
+                } header: {
+                    Text("Recommended Bedtime")
+                        .font(.headline)
                 }
             }
             .navigationTitle("BetterRest")
-            .toolbar {
-                Button("Calculate", action: calculateBedtime)
-            }
-            .alert(alertTitle, isPresented: $showingAlert) {
-                Button("Ok") { }
-            } message: {
-                Text(alertMessage)
-            }
+//            .toolbar {
+//                Button("Calculate", action: calculateBedtime)
+//            }
+//            .alert(alertTitle, isPresented: $showingAlert) {
+//                Button("Ok") { }
+//            } message: {
+//                Text(alertMessage)
+//            }
         }
 
     }
