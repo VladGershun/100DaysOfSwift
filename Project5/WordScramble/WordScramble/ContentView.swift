@@ -9,9 +9,30 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        List {
+            Section("Section 1") {
+                Text("Hello, world!")
+                
+                Text("Hello, world!")
+            }
+            
+            Section("Section 2") {
+                Text("Hello, world!")
+            }
+
+        }
+        .listStyle(.grouped)
+
     }
+
+    func loadFile() {
+//        if let fileURL = Bundle.main.url(forResource: "some-file", withExtension: "txt") {
+//            if let fileContents try? String(contentsOf: fileURL) {
+//                fileContents
+//            }
+//        }
+    }
+
 }
 
 struct ContentView_Previews: PreviewProvider {
