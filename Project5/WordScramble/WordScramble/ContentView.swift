@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError = false
+    @State private var score = 0
     
     var body: some View {
         NavigationView {
@@ -22,6 +23,8 @@ struct ContentView: View {
                 Section {
                     TextField("Enter Your Word", text: $newWord)
                         .autocapitalization(.none)
+                } header: {
+                    Text("Current Score: \(score)")
                 }
                 
                 Section {
@@ -32,7 +35,6 @@ struct ContentView: View {
                         }
                     }
                 }
-                
             }
             .navigationTitle(rootWord)
             .onSubmit(addNewWord)
@@ -41,6 +43,13 @@ struct ContentView: View {
                 Button("OK", role: .cancel) { }
             } message: {
                 Text(errorMessage)
+            }
+            .toolbar {
+                Button {
+                    newGame()
+                } label: {
+                    Text("New Game")
+                }
             }
         }
     }
@@ -64,10 +73,21 @@ struct ContentView: View {
             return
         }
         
+        guard wordLength(word: answer) else {
+            wordError(title: "Word is to short", message: "Word must be longer than 2 letters!")
+            return
+        }
+        
+        guard dupWord(word: answer) else {
+            wordError(title: "Word is the same", message: "You can't use the original word!")
+            return
+        }
+        
         withAnimation {
             usedWords.insert(answer, at: 0)
         }
-    
+        
+        score += score(word: newWord)
         newWord = ""
     }
     
@@ -115,6 +135,35 @@ struct ContentView: View {
         showingError = true
     }
     
+    func wordLength(word: String) -> Bool {
+        if word.count < 3 {
+            return false
+        }
+        return true
+    }
+    
+    func dupWord(word: String) -> Bool {
+        if word == rootWord {
+            return false
+        }
+        return true
+    }
+    
+    func newGame() {
+        startGame()
+        usedWords.removeAll()
+        score = 0
+    }
+    
+    func score(word: String) -> Int {
+        if newWord.count > 5 {
+            return 3
+        } else if newWord.count > 3 {
+            return 2
+        } else {
+            return 1
+        }
+    }
  }
 
 struct ContentView_Previews: PreviewProvider {
