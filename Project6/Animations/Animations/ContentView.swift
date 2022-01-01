@@ -8,43 +8,56 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var animationAmount = 1.0
+//    @State private var enabled = false
+//    @State private var dragAmount = CGSize.zero
+    let letters = Array("Hello SwiftUI")
+    @State private var enabled = false
+    @State private var dragAmount = CGSize.zero
     
     var body: some View {
-        print(animationAmount)
-//        Button("Tap me") {
-//            animationAmount += 1
+//        Button("Tap Me") {
+//            enabled.toggle()
 //        }
-//        .padding(50)
-//        .background(.red)
+//        .frame(width: 200, height: 200)s
+//        .background(enabled ? .blue : .red)
+//        .animation(.default, value: enabled)
 //        .foregroundColor(.white)
-//        .clipShape(Circle())
-//        .overlay(
-//            Circle()
-//                .stroke(.red)
-//                .scaleEffect(animationAmount)
-//                .opacity(2 - animationAmount)
-//                .animation(
-//                    .easeOut(duration: 1)
-//                        .repeatForever(autoreverses: false),
-//                    value: animationAmount
-//                )
-//        )
+//        .clipShape(RoundedRectangle(cornerRadius: enabled ? 60 : 0))
+//        .animation(.interpolatingSpring(stiffness: 10, damping: 1), value: enabled)
         
-        return VStack {
-            Stepper("Scale amount", value: $animationAmount.animation(), in: 1...10)
-            
-            Spacer()
-            
-            Button("Tap Me") {
-                animationAmount += 1
+//        LinearGradient(gradient: Gradient(colors: [.yellow, .red]), startPoint: .topLeading, endPoint: .bottomTrailing)
+//            .frame(width: 300, height: 200)
+//            .clipShape(RoundedRectangle(cornerRadius: 10))
+//            .offset(dragAmount)
+//            .gesture(
+//                DragGesture()
+//                    .onChanged { dragAmount = $0.translation }
+//                    .onEnded { _ in
+//                        withAnimation {
+//                            dragAmount = .zero
+//                        }
+//                    }
+//            )
+        
+        HStack(spacing: 0) {
+            ForEach(0..<letters.count) { num in
+                Text(String(letters[num]))
+                    .padding(5)
+                    .font(.title)
+                    .background(enabled ? .blue : .red)
+                    .offset(dragAmount)
+                    .animation(.default.delay(Double(num) / 20), value: dragAmount)
             }
-            .padding(40)
-            .background(.red)
-            .foregroundColor(.white)
-            .clipShape(Circle())
-            .scaleEffect(animationAmount)
         }
+        .gesture(
+            DragGesture()
+                .onChanged { dragAmount = $0.translation }
+                .onEnded { _ in
+                    dragAmount = .zero
+                    enabled.toggle()
+                }
+        )
+    
         
     }
 }
