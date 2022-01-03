@@ -17,6 +17,12 @@ struct ContentView: View {
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
     
+    @State private var animationAmount = 0.0
+    
+    @State private var isCorrect = false
+    
+    @State private var fadeOut = false
+    
     var body: some View {
         ZStack {
             RadialGradient(stops: [
@@ -43,10 +49,17 @@ struct ContentView: View {
                     
                     ForEach(0..<3) { number in
                         Button {
-                            flagTapped(number)
+                            withAnimation {
+                                animationAmount += 360
+                                flagTapped(number)
+                            }
+                            
                         } label: {
                             FlagImage(countries: countries, number: number)
                         }
+                        .rotation3DEffect(.degrees(self.isCorrect && correctAnswer == number ? animationAmount : 0), axis: (x: 0, y:1, z: 0))
+                        .opacity(self.fadeOut && correctAnswer != number ? 0.25 : 1)
+        
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -81,6 +94,8 @@ struct ContentView: View {
     
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
+            self.isCorrect = true
+            self.fadeOut = true
             scoreTitle = "Correct"
             currentScore += 1
         } else {
@@ -93,6 +108,8 @@ struct ContentView: View {
     func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        self.fadeOut = false
+        self.isCorrect = false
         resetGame()
     }
     
