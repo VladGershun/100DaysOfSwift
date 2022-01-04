@@ -23,23 +23,58 @@ struct MainView: View {
     @State private var question = Question()
     
     var body: some View {
-        Text("Multiplication Is Fun!")
-            .padding()
-        
-        QuestionView(question: question)
+        NavigationView {
+            Section {
+                QuestionView(question: question)
+                    .frame(maxWidth: .infinity, maxHeight: 200)
+                    .background(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    .padding()
+            }
+            .navigationTitle("Multiplication Is Fun!")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                LinearGradient(colors: [.blue, .green], startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
+            )
+        }
     }
+    
 }
 
 struct QuestionView: View {
     @State var question: Question
     
     var body: some View {
-        Text(question.question)
-        HStack {
-            Stepper("Min: \(question.firstValue)", value: $question.firstValue, in: 0...12)
-            Stepper("Max: \(question.secondValue)", value: $question.secondValue, in: 0...12)
+        
+        VStack {
+            Picker("First Value", selection: $question.firstValue) {
+                ForEach(0..<13) {
+                    Text($0, format: .number)
+                }
+            }
+            .pickerStyle(.segmented)
+            
+            Divider()
+            
+            Picker("Second Value", selection: $question.secondValue) {
+                ForEach(0..<13) {
+                    Text($0, format: .number)
+                }
+            }
+            .pickerStyle(.segmented)
+            Divider()
+            HStack {
+                Text("What Is")
+                Image(systemName: "\(question.firstValue).circle")
+                Text("x")
+                Image(systemName: "\(question.secondValue).circle")
+                Text("?")
+            }
+            .font(.title)
         }
-        Text(question.answer, format: .number)
+        .padding()
+        
     }
 }
 
