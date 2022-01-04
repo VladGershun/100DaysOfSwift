@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F5EBD5502783EF75006F1E35 /* EdutainmentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBD54F2783EF75006F1E35 /* EdutainmentApp.swift */; };
-		F5EBD5522783EF75006F1E35 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBD5512783EF75006F1E35 /* ContentView.swift */; };
+		F5EBD5522783EF75006F1E35 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBD5512783EF75006F1E35 /* MainView.swift */; };
 		F5EBD5542783EF77006F1E35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5EBD5532783EF77006F1E35 /* Assets.xcassets */; };
 		F5EBD5572783EF77006F1E35 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5EBD5562783EF77006F1E35 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		F5EBD54C2783EF75006F1E35 /* Edutainment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Edutainment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5EBD54F2783EF75006F1E35 /* EdutainmentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdutainmentApp.swift; sourceTree = "<group>"; };
-		F5EBD5512783EF75006F1E35 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F5EBD5512783EF75006F1E35 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F5EBD5532783EF77006F1E35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5EBD5562783EF77006F1E35 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,7 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				F5EBD54F2783EF75006F1E35 /* EdutainmentApp.swift */,
-				F5EBD5512783EF75006F1E35 /* ContentView.swift */,
+				F5EBD5512783EF75006F1E35 /* MainView.swift */,
 				F5EBD5532783EF77006F1E35 /* Assets.xcassets */,
 				F5EBD5552783EF77006F1E35 /* Preview Content */,
 			);
@@ -137,7 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5EBD5522783EF75006F1E35 /* ContentView.swift in Sources */,
+				F5EBD5522783EF75006F1E35 /* MainView.swift in Sources */,
 				F5EBD5502783EF75006F1E35 /* EdutainmentApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
