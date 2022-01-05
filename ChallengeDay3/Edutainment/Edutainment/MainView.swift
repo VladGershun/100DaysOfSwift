@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct Question {
-    var firstValue = 10
-    var secondValue = 4
+    var firstValue = 1
+    var secondValue = 1
     var question: String {
         "What Is \(firstValue) X \(secondValue)"
     }
@@ -22,17 +22,19 @@ struct MainView: View {
     @State private var question = Question()
     @State private var userAnswer = 0
     @State private var answerArray = [Int]()
+    @State private var message = ""
+    @State private var animationAmount = 0.0
     
     func makeArray() {
         answerArray.append(question.answer)
         for _ in 0..<4 {
             if question.answer < 15 {
-                answerArray.append(-Int.random(in: (question.answer - 10)...(question.answer - 4))).shuffled()
+                answerArray.append(-Int.random(in: (question.answer - 10)...(question.answer - 4)))
+                answerArray.shuffle()
             } else {
-                answerArray.append(Int.random(in: (question.answer - 10)...(question.answer - 4))).shuffled()
+                answerArray.append(Int.random(in: (question.answer - 10)...(question.answer - 4)))
+                answerArray.shuffle()
             }
-           
-            
         }
         print(answerArray)
     }
@@ -54,12 +56,25 @@ struct MainView: View {
                 .task {
                     makeArray()
                 }
+                 
             
             HStack {
                 ForEach(answerArray, id: \.self) { i in
                     Spacer()
-                    Button("\(i)") {
-                        //no-op
+                    Button {
+                        if i == question.answer {
+                            withAnimation {
+                                animationAmount += 360
+                            }
+                
+                            message = "Correct!"
+                        } else {
+                            message = "Try Again!"
+                        }
+                    } label: {
+                        Text("\(i)")
+                            .rotation3DEffect(.degrees(animationAmount), axis: (x: 0, y: 1, z: 0))
+
                     }
                     .buttonStyle(.borderedProminent)
                     Spacer()
@@ -67,8 +82,12 @@ struct MainView: View {
             }
             .padding()
             
-            
             Spacer()
+            
+            Text(message)
+                .font(.title)
+                .foregroundColor(.white)
+            
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -113,6 +132,7 @@ struct QuestionView: View {
         .padding()
         
     }
+
 }
 
 
