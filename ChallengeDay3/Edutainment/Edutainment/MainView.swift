@@ -66,7 +66,6 @@ struct MainView: View {
                             withAnimation {
                                 animationAmount += 360
                             }
-                
                             message = "Correct!"
                         } else {
                             message = "Try Again!"
@@ -76,6 +75,9 @@ struct MainView: View {
                             .rotation3DEffect(.degrees(animationAmount), axis: (x: 0, y: 1, z: 0))
                     }
                     .buttonStyle(.borderedProminent)
+                    .onTapGesture {
+                        makeArray()
+                    }
                     Spacer()
                 }
             }
@@ -133,8 +135,6 @@ struct QuestionView: View {
     }
 
 }
-
-
 
 
 struct ContentView_Previews: PreviewProvider {
