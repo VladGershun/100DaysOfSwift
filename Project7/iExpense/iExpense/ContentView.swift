@@ -7,10 +7,22 @@
 
 import SwiftUI
 
+struct User: Codable {
+    var firstName: String
+    var lastName: String
+}
+
 struct ContentView: View {
+    @State private var user = User(firstName: "Vlad", lastName: "Gershun")
+    
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Button("Save User") {
+            let encoder = JSONEncoder()
+            if let data = try? encoder.encode(user) {
+                UserDefaults.standard.set(data, forKey: "UserData")
+            }
+        }
     }
 }
 
