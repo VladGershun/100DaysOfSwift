@@ -27,3 +27,7 @@ class Expenses: ObservableObject {
         }
     }
 }
+
+class Currency: ObservableObject {
+    @Published var currency = "USD"
+}

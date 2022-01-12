@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var expenses = Expenses()
     @State private var showingAddExpense = false
+    @StateObject var currency = Currency()
     
     var body: some View {
         NavigationView {
@@ -25,7 +26,8 @@ struct ContentView: View {
                         
                         Spacer()
                         
-                        Text(item.amount, format: .currency(code: "USD"))
+                        Text(item.amount, format: .currency(code: currency.currency))
+                            .foregroundColor(item.amount > 100 ? .red : .blue)
                     }
                 }
                 .onDelete(perform: removeItems)
@@ -39,7 +41,7 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $showingAddExpense) {
-                AddView(expenses: expenses)
+                AddView(expenses: expenses, currency: currency)
             }
         }
     }
