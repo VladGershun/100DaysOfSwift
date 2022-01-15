@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
-    let missions: [Mission] = Bundle.main.decode("missions.json")
-    
+    let astronauts: [String: Astronaut] = Bundle.main.missionDecode("astronauts.json")
+    let missions: [Mission] = Bundle.main.missionDecode("missions.json")
+   
     let columns = [
         GridItem(.adaptive(minimum: 150))
     ]
@@ -65,3 +65,4 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
  
+
