@@ -33,6 +33,11 @@ struct MissionView: View {
                         
                         Divider()
                         
+                        Text(mission.formattedLaunchDate)
+                            .font(.headline)
+                        
+                        Divider()
+                        
                         Text(mission.description)
                         
                         Divider()
@@ -93,5 +98,26 @@ struct MissionView: View {
                 fatalError("Missing \(member.name)")
             }
         }
+    }
+}
+
+
+struct ScrollingView: View {
+    let astronaut: Astronaut
+    
+    var body: some View {
+        ScrollView {
+            VStack {
+                Image(astronaut.id)
+                    .resizable()
+                    .scaledToFit()
+                
+                Text(astronaut.description)
+                    .padding()
+            }
+        }
+        .background(.darkBackground)
+        .navigationTitle(astronaut.name)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
