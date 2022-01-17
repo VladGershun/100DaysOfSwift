@@ -16,5 +16,3 @@ extension ShapeStyle where Self == Color {
         Color(red: 0.2, green: 0.2, blue: 0.3)
     }
 }
-
-
